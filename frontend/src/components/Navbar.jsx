@@ -78,12 +78,14 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/events"
+            <a
+              href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
             >
               Register Now
-            </Link>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -118,13 +120,15 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/events"
+            <a
+              href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-center btn-primary mt-4"
               onClick={() => setIsOpen(false)}
             >
               Register Now
-            </Link>
+            </a>
           </div>
         </div>
       )}

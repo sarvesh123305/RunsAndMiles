@@ -8,27 +8,60 @@ import { API_URL } from '../config';
 
 const EventDetails = () => {
   const { id } = useParams();
-  const [event, setEvent] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [selectedDistance, setSelectedDistance] = useState(null);
 
+  // Hardcoded event data
+  const event = {
+    id: '1',
+    title: 'Runs & Miles Half Marathon 1st Edition',
+    description: 'Run for Health & Wellness - Edition 1 marks the beginning of a powerful endurance movement. This event is not just about finishing a race — it is about embracing a lifestyle of discipline, strength, and preventive healthcare awareness.',
+    date: '2026-05-17',
+    time: '5:00 AM',
+    venue: 'Wadia College Ground, Sangamvadi',
+    city: 'Pune',
+    state: 'Maharashtra',
+    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=800',
+    distance: ['21K', '10K', '5K', '3K'],
+    categoryNames: {
+      '21K': 'Half Marathon',
+      '10K': 'Timed Run',
+      '5K': 'Challenge Run',
+      '3K': 'Fun Run'
+    },
+    registrationFee: {
+      '21K': 799,
+      '10K': 599,
+      '5K': 399,
+      '3K': 299
+    },
+    totalSlots: 5000,
+    registeredCount: 1250,
+    route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
+    categoryPerks: {
+      '21K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '10K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '5K': ['Event T-Shirt', 'Finisher Medal', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '3K': ['Event T-Shirt', 'Finisher Medal', 'Refreshments', 'Free Professional Photos', 'E-Certificate', 'Hydration Support']
+    },
+    highlights: [
+      'Premium Event T-Shirt',
+      'Finisher Medal',
+      'Hot Breakfast',
+      'Free Professional Photos',
+      'Hydration & Water Support',
+      'Official Event Cap',
+      'E-Certificate',
+      'Timing Chip (10K & 21K)'
+    ]
+  };
+
+  const loading = false;
+
   useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const response = await fetch(`${API_URL}/events/${id}`);
-        const data = await response.json();
-        setEvent(data);
-        if (data.distance && data.distance.length > 0) {
-          setSelectedDistance(data.distance[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching event:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvent();
-  }, [id]);
+    if (event.distance && event.distance.length > 0) {
+      setSelectedDistance(event.distance[0]);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -239,13 +272,15 @@ const EventDetails = () => {
                 </p>
               </div>
 
-              <Link
-                to={`/register/${event.id}?distance=${selectedDistance}`}
+              <a
+                href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-primary w-full flex items-center justify-center mb-4"
               >
                 Register Now
                 <ChevronRight className="w-5 h-5 ml-2" />
-              </Link>
+              </a>
 
               <button className="w-full flex items-center justify-center text-gray-600 hover:text-primary transition-colors py-2">
                 <Heart className="w-5 h-5 mr-2" />

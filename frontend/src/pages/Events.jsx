@@ -4,28 +4,56 @@ import EventCard from '../components/EventCard';
 import { API_URL } from '../config';
 
 const Events = () => {
-  const [events, setEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Hardcoded event data
+  const events = [{
+    id: '1',
+    title: 'Runs & Miles Half Marathon 1st Edition',
+    description: 'Run for Health & Wellness - Edition 1 marks the beginning of a powerful endurance movement. This event is not just about finishing a race — it is about embracing a lifestyle of discipline, strength, and preventive healthcare awareness.',
+    date: '2026-05-17',
+    time: '5:00 AM',
+    venue: 'Wadia College Ground, Sangamvadi',
+    city: 'Pune',
+    state: 'Maharashtra',
+    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=800',
+    distance: ['21K', '10K', '5K', '3K'],
+    categoryNames: {
+      '21K': 'Half Marathon',
+      '10K': 'Timed Run',
+      '5K': 'Challenge Run',
+      '3K': 'Fun Run'
+    },
+    registrationFee: {
+      '21K': 799,
+      '10K': 599,
+      '5K': 399,
+      '3K': 299
+    },
+    totalSlots: 5000,
+    registeredCount: 1250,
+    route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
+    categoryPerks: {
+      '21K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '10K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '5K': ['Event T-Shirt', 'Finisher Medal', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '3K': ['Event T-Shirt', 'Finisher Medal', 'Refreshments', 'Free Professional Photos', 'E-Certificate', 'Hydration Support']
+    },
+    highlights: [
+      'Premium Event T-Shirt',
+      'Finisher Medal',
+      'Hot Breakfast',
+      'Free Professional Photos',
+      'Hydration & Water Support',
+      'Official Event Cap',
+      'E-Certificate',
+      'Timing Chip (10K & 21K)'
+    ]
+  }];
+
+  const [filteredEvents, setFilteredEvents] = useState(events);
+  const loading = false;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCity, setSelectedCity] = useState('all');
   const [selectedDistance, setSelectedDistance] = useState('all');
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(`${API_URL}/events`);
-        const data = await response.json();
-        setEvents(data);
-        setFilteredEvents(data);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   useEffect(() => {
     let result = events;

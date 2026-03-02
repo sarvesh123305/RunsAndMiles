@@ -58,9 +58,18 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Links */}
+          {/* Contact & Social */}
           <div>
-            <h3 className="font-display font-semibold text-lg mb-6">Follow Us</h3>
+            <h3 className="font-display font-semibold text-lg mb-6">Contact & Follow Us</h3>
+            <div className="space-y-3 mb-4">
+              <a
+                href="mailto:contact@runsandmiles.com"
+                className="flex items-center text-gray-400 hover:text-primary transition-colors"
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                <span className="text-sm">contact@runsandmiles.com</span>
+              </a>
+            </div>
             <a
               href="https://www.instagram.com/runs._and._miles?igsh=bDJ4YXVnb3hkdDh0"
               target="_blank"

@@ -8,11 +8,56 @@ import EventCard from '../components/EventCard';
 import { API_URL } from '../config';
 
 const Home = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [contactStatus, setContactStatus] = useState(''); // '', 'sending', 'sent', 'error'
   const [contactError, setContactError] = useState('');
+
+  // Hardcoded event data
+  const events = [{
+    id: '1',
+    title: 'Runs & Miles Half Marathon 1st Edition',
+    description: 'Run for Health & Wellness - Edition 1 marks the beginning of a powerful endurance movement. This event is not just about finishing a race — it is about embracing a lifestyle of discipline, strength, and preventive healthcare awareness.',
+    date: '2026-05-17',
+    time: '5:00 AM',
+    venue: 'Wadia College Ground, Sangamvadi',
+    city: 'Pune',
+    state: 'Maharashtra',
+    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=800',
+    distance: ['21K', '10K', '5K', '3K'],
+    categoryNames: {
+      '21K': 'Half Marathon',
+      '10K': 'Timed Run',
+      '5K': 'Challenge Run',
+      '3K': 'Fun Run'
+    },
+    registrationFee: {
+      '21K': 799,
+      '10K': 599,
+      '5K': 399,
+      '3K': 299
+    },
+    totalSlots: 5000,
+    registeredCount: 1250,
+    route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
+    categoryPerks: {
+      '21K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '10K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '5K': ['Event T-Shirt', 'Finisher Medal', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
+      '3K': ['Event T-Shirt', 'Finisher Medal', 'Refreshments', 'Free Professional Photos', 'E-Certificate', 'Hydration Support']
+    },
+    highlights: [
+      'Premium Event T-Shirt',
+      'Finisher Medal',
+      'Hot Breakfast',
+      'Free Professional Photos',
+      'Hydration & Water Support',
+      'Official Event Cap',
+      'E-Certificate',
+      'Timing Chip (10K & 21K)'
+    ]
+  }];
+
+  const loading = false;
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
@@ -38,21 +83,6 @@ const Home = () => {
       setContactError(err.message || 'Something went wrong');
     }
   };
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(`${API_URL}/events`);
-        const data = await response.json();
-        setEvents(data);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
 
 
   return (
@@ -112,7 +142,7 @@ const Home = () => {
                     </div>
                     <div>
                       <p className="font-bold text-dark">Next Event</p>
-                      <p className="text-sm text-gray-600">Half Marathon • 10 May 2026</p>
+                      <p className="text-sm text-gray-600">Half Marathon • 17 May 2026</p>
                     </div>
                   </div>
                 </div>
@@ -199,7 +229,7 @@ const Home = () => {
               />
               <div className="absolute -bottom-8 -left-8 bg-gradient-to-r from-primary to-accent p-6 rounded-2xl text-white shadow-xl">
                 <p className="font-display text-2xl font-bold">1st Edition</p>
-                <p className="text-sm opacity-90">10 May 2026</p>
+                <p className="text-sm opacity-90">17 May 2026</p>
               </div>
             </div>
           </div>
@@ -250,7 +280,7 @@ const Home = () => {
             Ready to Start Your Running Journey?
           </h2>
           <p className="text-white/90 text-xl mb-8 max-w-2xl mx-auto">
-            Be part of the inaugural Runs & Miles Half Marathon on 10 May 2026 at Wadia College of Engineering, Pune.
+            Be part of the inaugural Runs & Miles Half Marathon on 17 May 2026 at Wadia College Ground, Pune.
             Your next milestone awaits!
           </p>
           <Link
@@ -283,7 +313,7 @@ const Home = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-dark">Email</p>
-                    <p className="text-gray-600">runsandmiles1@gmail.com</p>
+                    <p className="text-gray-600">contact@runsandmiles.com</p>
                   </div>
                 </div>
                 <div className="flex items-center">
