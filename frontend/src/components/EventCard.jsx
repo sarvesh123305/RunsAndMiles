@@ -81,7 +81,7 @@ const EventCard = ({ event }) => {
           <div>
             <span className="text-sm text-gray-500">Starting from</span>
             <p className="font-bold text-xl text-dark">
-              ₹{Math.min(...Object.values(event.registrationFee)).toLocaleString()}
+              ₹299
             </p>
           </div>
           <Link

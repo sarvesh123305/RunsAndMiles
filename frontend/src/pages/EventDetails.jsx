@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   Calendar, MapPin, Clock, Users, Award, Heart, 
-  Route, ChevronRight, AlertCircle, Check 
+  Route, ChevronRight, AlertCircle, Check, Shirt, Medal,
+  Timer, Coffee, Camera, Crown, FileCheck, Droplets
 } from 'lucide-react';
 import { API_URL } from '../config';
 
@@ -29,19 +30,64 @@ const EventDetails = () => {
       '3K': 'Fun Run'
     },
     registrationFee: {
-      '21K': 799,
-      '10K': 599,
-      '5K': 399,
-      '3K': 299
+      '21K': 749.5,
+      '10K': 719.4,
+      '5K': 399.5,
+      '3K': 299.4
+    },
+    originalPrice: {
+      '21K': 1499,
+      '10K': 1199,
+      '5K': 799,
+      '3K': 499
+    },
+    discount: {
+      '21K': 50,
+      '10K': 40,
+      '5K': 50,
+      '3K': 40
     },
     totalSlots: 5000,
     registeredCount: 1250,
     route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
     categoryPerks: {
-      '21K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
-      '10K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
-      '5K': ['Event T-Shirt', 'Finisher Medal', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
-      '3K': ['Event T-Shirt', 'Finisher Medal', 'Refreshments', 'Free Professional Photos', 'E-Certificate', 'Hydration Support']
+      '21K': [
+        { icon: 'Shirt', text: 'Premium Event T-Shirt', color: 'blue' },
+        { icon: 'Medal', text: 'Finisher Medal', color: 'yellow' },
+        { icon: 'Timer', text: 'Timing Chip Enabled', color: 'green' },
+        { icon: 'Coffee', text: 'Hot Breakfast', color: 'orange' },
+        { icon: 'Camera', text: 'Professional Photos', color: 'purple' },
+        { icon: 'Crown', text: 'Official Event Cap', color: 'red' },
+        { icon: 'FileCheck', text: 'E-Certificate', color: 'teal' },
+        { icon: 'Droplets', text: 'Hydration Support', color: 'cyan' }
+      ],
+      '10K': [
+        { icon: 'Shirt', text: 'Premium Event T-Shirt', color: 'blue' },
+        { icon: 'Medal', text: 'Finisher Medal', color: 'yellow' },
+        { icon: 'Timer', text: 'Timing Chip Enabled', color: 'green' },
+        { icon: 'Coffee', text: 'Hot Breakfast', color: 'orange' },
+        { icon: 'Camera', text: 'Professional Photos', color: 'purple' },
+        { icon: 'Crown', text: 'Official Event Cap', color: 'red' },
+        { icon: 'FileCheck', text: 'E-Certificate', color: 'teal' },
+        { icon: 'Droplets', text: 'Hydration Support', color: 'cyan' }
+      ],
+      '5K': [
+        { icon: 'Shirt', text: 'Event T-Shirt', color: 'blue' },
+        { icon: 'Medal', text: 'Finisher Medal', color: 'yellow' },
+        { icon: 'Coffee', text: 'Hot Breakfast', color: 'orange' },
+        { icon: 'Camera', text: 'Professional Photos', color: 'purple' },
+        { icon: 'Crown', text: 'Official Event Cap', color: 'red' },
+        { icon: 'FileCheck', text: 'E-Certificate', color: 'teal' },
+        { icon: 'Droplets', text: 'Hydration Support', color: 'cyan' }
+      ],
+      '3K': [
+        { icon: 'Shirt', text: 'Event T-Shirt', color: 'blue' },
+        { icon: 'Medal', text: 'Finisher Medal', color: 'yellow' },
+        { icon: 'Coffee', text: 'Refreshments', color: 'orange' },
+        { icon: 'Camera', text: 'Professional Photos', color: 'purple' },
+        { icon: 'FileCheck', text: 'E-Certificate', color: 'teal' },
+        { icon: 'Droplets', text: 'Hydration Support', color: 'cyan' }
+      ]
     },
     highlights: [
       'Premium Event T-Shirt',
@@ -169,28 +215,65 @@ const EventDetails = () => {
             <div className="card p-8">
               <h2 className="font-display text-2xl font-bold text-dark mb-4 flex items-center">
                 <Award className="w-6 h-6 mr-2 text-primary" />
-                What's Included
+                What's Included in Your Race Kit
               </h2>
+              <p className="text-gray-600 mb-6">Every participant receives an exclusive race kit packed with premium goodies!</p>
               {event.categoryPerks ? (
-                <div className="space-y-6">
-                  {event.distance.map((d) => (
-                    <div key={d}>
-                      <h3 className="font-semibold text-dark mb-3">
-                        {d} {event.categoryNames?.[d] || ''}
-                        <span className="text-primary ml-2">— ₹{event.registrationFee[d].toLocaleString()}</span>
-                      </h3>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {event.categoryPerks[d].map((perk, index) => (
-                          <div key={index} className="flex items-center bg-gray-50 rounded-xl p-3">
-                            <div className="bg-primary/10 p-2 rounded-lg mr-3">
-                              <Check className="w-4 h-4 text-primary" />
+                <div className="space-y-8">
+                  {event.distance.map((d) => {
+                    const getIcon = (iconName) => {
+                      const icons = { Shirt, Medal, Timer, Coffee, Camera, Crown, FileCheck, Droplets };
+                      return icons[iconName] || Check;
+                    };
+                    
+                    const getColorClasses = (color) => {
+                      const colors = {
+                        blue: 'from-blue-500 to-blue-600 shadow-blue-500/20',
+                        yellow: 'from-yellow-500 to-amber-600 shadow-yellow-500/20',
+                        green: 'from-green-500 to-emerald-600 shadow-green-500/20',
+                        orange: 'from-orange-500 to-red-600 shadow-orange-500/20',
+                        purple: 'from-purple-500 to-pink-600 shadow-purple-500/20',
+                        red: 'from-red-500 to-rose-600 shadow-red-500/20',
+                        teal: 'from-teal-500 to-cyan-600 shadow-teal-500/20',
+                        cyan: 'from-cyan-500 to-blue-600 shadow-cyan-500/20'
+                      };
+                      return colors[color] || 'from-gray-500 to-gray-600 shadow-gray-500/20';
+                    };
+
+                    return (
+                      <div key={d} className="border-2 border-gray-100 rounded-2xl p-6 hover:border-primary/30 transition-all bg-gradient-to-br from-white to-gray-50">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="font-display font-bold text-xl text-dark">
+                            {d} <span className="text-gray-500 font-normal text-base">{event.categoryNames?.[d] || ''}</span>
+                          </h3>
+                          <div className="text-right">
+                            <div className="flex items-center gap-2">
+                              <span className="text-gray-400 line-through text-sm">₹{event.originalPrice[d]}</span>
+                              <span className="bg-green-500 text-white font-bold px-2 py-0.5 rounded text-xs">
+                                {event.discount[d]}% OFF
+                              </span>
                             </div>
-                            <span className="text-gray-700 text-sm font-medium">{perk}</span>
+                            <span className="bg-gradient-to-r from-primary to-accent text-white font-bold px-4 py-1.5 rounded-full text-sm shadow-lg inline-block mt-1">
+                              ₹{event.registrationFee[d]}
+                            </span>
                           </div>
-                        ))}
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          {event.categoryPerks[d].map((perk, index) => {
+                            const Icon = getIcon(perk.icon);
+                            return (
+                              <div key={index} className="group flex items-center bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                                <div className={`bg-gradient-to-br ${getColorClasses(perk.color)} p-3 rounded-xl mr-4 shadow-lg group-hover:scale-110 transition-transform`}>
+                                  <Icon className="w-5 h-5 text-white" />
+                                </div>
+                                <span className="text-gray-800 text-sm font-semibold">{perk.text}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -231,10 +314,17 @@ const EventDetails = () => {
                     <p className="text-sm font-medium text-gray-600 mb-1">
                       {event.categoryNames?.[distance] || ''}
                     </p>
-                    <p className="text-2xl font-bold text-primary">
-                      ₹{event.registrationFee[distance].toLocaleString()}
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">Registration Fee</p>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400 line-through text-sm">₹{event.originalPrice[distance]}</span>
+                        <span className="bg-green-500 text-white font-bold px-2 py-0.5 rounded text-xs">
+                          {event.discount[distance]}% OFF
+                        </span>
+                      </div>
+                      <p className="text-2xl font-bold text-primary">
+                        ₹{event.registrationFee[distance]}
+                      </p>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -246,8 +336,16 @@ const EventDetails = () => {
             <div className="card p-6 sticky top-28">
               <div className="text-center mb-6">
                 <p className="text-sm text-gray-500 mb-1">Registration Fee</p>
+                {selectedDistance && (
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-gray-400 line-through text-lg">₹{event.originalPrice[selectedDistance]}</span>
+                    <span className="bg-green-500 text-white font-bold px-3 py-1 rounded-full text-sm shadow-lg">
+                      {event.discount[selectedDistance]}% OFF
+                    </span>
+                  </div>
+                )}
                 <p className="font-display text-4xl font-bold text-dark">
-                  ₹{selectedDistance ? event.registrationFee[selectedDistance].toLocaleString() : '---'}
+                  ₹{selectedDistance ? event.registrationFee[selectedDistance] : '---'}
                 </p>
                 <p className="text-sm text-primary font-medium">{selectedDistance || 'Select category'}</p>
               </div>
