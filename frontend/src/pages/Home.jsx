@@ -100,70 +100,80 @@ const Home = () => {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-dark via-secondary to-dark overflow-hidden">
+      <section className="relative min-h-[95vh] flex items-center bg-gradient-to-br from-dark-900 via-secondary-800 to-dark-900 overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-primary rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent rounded-full blur-3xl" />
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-primary-500 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent-500 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary-600 rounded-full blur-3xl opacity-30" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_80%)]" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="text-white">
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-                <span className="animate-pulse w-2 h-2 bg-green-400 rounded-full mr-2" />
-                <span className="text-sm">Registrations Open for 2026 Events</span>
+              <div className="inline-flex items-center bg-gradient-to-r from-accent-500/20 to-primary-500/20 backdrop-blur-md rounded-full px-5 py-2.5 mb-8 border border-white/10">
+                <span className="animate-pulse w-2.5 h-2.5 bg-accent-400 rounded-full mr-3 shadow-lg shadow-accent-500/50" />
+                <span className="text-sm font-semibold">🎉 Registrations Open for 2026 Events</span>
               </div>
               
-              <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] mb-8">
                 Run where<br />
-                <span className="gradient-text">stories live.</span>
+                <span className="bg-gradient-to-r from-primary-400 via-primary-300 to-accent-400 bg-clip-text text-transparent animate-gradient">stories live.</span>
               </h1>
               
-              <p className="text-xl text-gray-300 mb-4 leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-200 mb-5 leading-relaxed font-medium">
                 Trade your treadmill views for sunrises over coastlines, finish lines near historic landmarks, and the thrill of thousands chasing the same goal as you.
               </p>
-              <p className="text-lg text-primary font-semibold mb-8">
-                Your next starting line is waiting…are you in?
+              <p className="text-lg md:text-xl text-primary-300 font-bold mb-10 flex items-center">
+                <span className="mr-2">🏃</span> Your next starting line is waiting…are you in?
               </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Link to="/events" className="btn-primary flex items-center">
+              <div className="flex flex-wrap gap-5">
+                <Link to="/events" className="btn-primary flex items-center text-base group">
                   Explore Events
-                  <ChevronRight className="ml-2 w-5 h-5" />
+                  <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a href="#about" className="btn-outline border-white text-white hover:bg-white hover:text-dark">
+                <a href="#about" className="btn-outline border-2 border-white text-white hover:bg-white hover:text-dark-900 text-base">
                   Learn More
                 </a>
               </div>
-
-
             </div>
 
             <div className="relative hidden lg:block">
-              <div className="relative z-10">
+              <div className="relative z-10 group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                 <img
                   src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800"
                   alt="Marathon Runner"
-                  className="rounded-3xl shadow-2xl"
+                  className="rounded-3xl shadow-premium-lg relative z-10 border-4 border-white/10 group-hover:scale-[1.02] transition-transform duration-500"
                 />
-                <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-primary/10 p-3 rounded-xl">
-                      <Trophy className="w-8 h-8 text-primary" />
+                <div className="absolute -bottom-8 -left-8 bg-white rounded-2xl p-6 shadow-premium-lg z-20 hover:-translate-y-1 transition-transform duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-gradient-to-br from-primary-500 to-primary-600 p-4 rounded-xl shadow-lg">
+                      <Trophy className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                      <p className="font-bold text-dark">Next Event</p>
-                      <p className="text-sm text-gray-600">Half Marathon • 17 May 2026</p>
+                      <p className="font-display font-bold text-dark-900 text-lg">Next Event</p>
+                      <p className="text-sm text-gray-600 font-medium">Half Marathon • 17 May 2026</p>
                     </div>
                   </div>
                 </div>
               </div>
               
               {/* Decorative Elements */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl" />
+              <div className="absolute -top-10 -right-10 w-48 h-48 bg-primary-500/30 rounded-full blur-3xl animate-pulse-slow" />
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-accent-500/30 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
             </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
+            <div className="w-1.5 h-3 bg-white/50 rounded-full" />
           </div>
         </div>
       </section>

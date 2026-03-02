@@ -99,40 +99,50 @@ const Events = () => {
   return (
     <div className="min-h-screen bg-light">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-dark via-secondary to-dark py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
-            Marathon <span className="gradient-text">Events</span>
+      <section className="relative bg-gradient-to-br from-dark-900 via-secondary-800 to-dark-900 py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-primary-500 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent-500 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-flex items-center bg-gradient-to-r from-accent-500/20 to-primary-500/20 backdrop-blur-md rounded-full px-5 py-2 mb-6 border border-white/10">
+            <span className="animate-pulse w-2 h-2 bg-accent-400 rounded-full mr-3 shadow-lg shadow-accent-500/50" />
+            <span className="text-white text-sm font-semibold">🏃 Discover Your Next Challenge</span>
+          </div>
+          <h1 className="font-display text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            Marathon <span className="bg-gradient-to-r from-primary-400 via-primary-300 to-accent-400 bg-clip-text text-transparent">Events</span>
           </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-200 text-xl md:text-2xl max-w-3xl mx-auto font-medium">
             Discover and register for marathon events across India's most beautiful cities
           </p>
         </div>
       </section>
 
       {/* Filters */}
-      <section className="py-8 bg-white shadow-sm sticky top-20 z-40">
+      <section className="py-8 bg-white/95 backdrop-blur-lg shadow-lg sticky top-20 z-40 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             {/* Search */}
             <div className="relative flex-1 w-full">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-500" />
               <input
                 type="text"
-                placeholder="Search events..."
+                placeholder="Search events by name, city..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 outline-none transition font-medium"
               />
             </div>
 
             {/* City Filter */}
-            <div className="relative w-full md:w-48">
-              <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <div className="relative w-full md:w-56">
+              <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-500" />
               <select
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition appearance-none bg-white cursor-pointer"
+                className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 outline-none transition appearance-none bg-white cursor-pointer font-medium"
               >
                 <option value="all">All Cities</option>
                 {cities.map((city) => (
@@ -142,12 +152,12 @@ const Events = () => {
             </div>
 
             {/* Distance Filter */}
-            <div className="relative w-full md:w-48">
-              <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <div className="relative w-full md:w-56">
+              <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-500" />
               <select
                 value={selectedDistance}
                 onChange={(e) => setSelectedDistance(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition appearance-none bg-white cursor-pointer"
+                className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 outline-none transition appearance-none bg-white cursor-pointer font-medium"
               >
                 <option value="all">All Distances</option>
                 {distances.map((distance) => (
@@ -160,16 +170,19 @@ const Events = () => {
       </section>
 
       {/* Events Grid */}
-      <section className="py-12">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Results Count */}
-          <div className="flex items-center justify-between mb-8">
-            <p className="text-gray-600">
-              Showing <span className="font-semibold text-dark">{filteredEvents.length}</span> events
-            </p>
-            <div className="flex items-center text-sm text-gray-500">
-              <Calendar className="w-4 h-4 mr-1" />
-              Sorted by date
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+            <div>
+              <p className="text-gray-700 text-lg">
+                Showing <span className="font-bold text-primary-600 text-2xl">{filteredEvents.length}</span> {filteredEvents.length === 1 ? 'event' : 'events'}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">Find your perfect race and start your journey</p>
+            </div>
+            <div className="flex items-center text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg mt-3 sm:mt-0">
+              <Calendar className="w-4 h-4 mr-2 text-primary-600" />
+              <span className="font-medium">Sorted by date</span>
             </div>
           </div>
 
@@ -177,7 +190,7 @@ const Events = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="card p-6 animate-pulse">
-                  <div className="h-48 bg-gray-200 rounded-xl mb-4" />
+                  <div className="h-56 bg-gray-200 rounded-xl mb-4" />
                   <div className="h-6 bg-gray-200 rounded w-3/4 mb-2" />
                   <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
                   <div className="h-4 bg-gray-200 rounded w-full mb-2" />
@@ -192,21 +205,21 @@ const Events = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="w-12 h-12 text-gray-400" />
+            <div className="text-center py-24 bg-white rounded-3xl shadow-lg">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-accent-100 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <Search className="w-16 h-16 text-primary-600" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-dark mb-2">No events found</h3>
-              <p className="text-gray-600 mb-6">Try adjusting your search or filters</p>
+              <h3 className="font-display text-3xl font-bold text-dark-900 mb-3">No events found</h3>
+              <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto">Try adjusting your search or filters to discover more events</p>
               <button
                 onClick={() => {
                   setSearchTerm('');
                   setSelectedCity('all');
                   setSelectedDistance('all');
                 }}
-                className="btn-outline"
+                className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-premium hover:shadow-premium-lg transform hover:scale-105"
               >
-                Clear Filters
+                Clear All Filters
               </button>
             </div>
           )}

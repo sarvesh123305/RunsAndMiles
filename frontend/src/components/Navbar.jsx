@@ -46,33 +46,33 @@ const Navbar = () => {
   }, [location.pathname, navigate]);
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-primary-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-primary to-accent p-2 rounded-xl">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 p-2.5 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
               <MapPin className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="font-display font-bold text-2xl text-dark">
-                Runs <span className="text-primary">&</span> Miles
+              <h1 className="font-display font-black text-2xl bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
+                Runs & Miles
               </h1>
-              <p className="text-xs text-gray-500 -mt-1">Marathon Events India</p>
+              <p className="text-xs text-gray-600 -mt-1 font-semibold">Marathon Events India</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 onClick={(e) => handleNavClick(e, link)}
-                className={`font-medium transition-colors duration-300 ${
+                className={`font-bold px-5 py-2.5 rounded-full transition-all duration-300 ${
                   isActive(link.path)
-                    ? 'text-primary'
-                    : 'text-gray-700 hover:text-primary'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg scale-105'
+                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
                 }`}
               >
                 {link.name}
@@ -82,7 +82,7 @@ const Navbar = () => {
               href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
+              className="ml-3 bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Register Now
             </a>
@@ -90,13 +90,13 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2.5 rounded-xl hover:bg-gray-100 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
-              <X className="w-6 h-6 text-dark" />
+              <X className="w-6 h-6 text-gray-900" />
             ) : (
-              <Menu className="w-6 h-6 text-dark" />
+              <Menu className="w-6 h-6 text-gray-900" />
             )}
           </button>
         </div>
@@ -104,16 +104,16 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t">
-          <div className="px-4 py-4 space-y-3">
+        <div className="md:hidden bg-white border-t border-gray-100 shadow-xl">
+          <div className="px-4 py-6 space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`block py-2 px-4 rounded-lg font-medium ${
+                className={`block py-3 px-5 rounded-xl font-bold transition-all ${
                   isActive(link.path)
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
+                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
                 }`}
                 onClick={(e) => { handleNavClick(e, link); setIsOpen(false); }}
               >
@@ -124,7 +124,7 @@ const Navbar = () => {
               href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center btn-primary mt-4"
+              className="block text-center bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold px-8 py-4 rounded-full mt-4 shadow-lg"
               onClick={() => setIsOpen(false)}
             >
               Register Now
