@@ -74,26 +74,10 @@ const Home = () => {
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) return;
-    setContactStatus('sending');
-    setContactError('');
-    try {
-      const res = await fetch(`${API_URL}/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contactForm)
-      });
-      const data = await res.json();
-      if (data.success) {
-        setContactStatus('sent');
-        setContactForm({ name: '', email: '', message: '' });
-        setTimeout(() => setContactStatus(''), 5000);
-      } else {
-        throw new Error(data.message || 'Failed to send');
-      }
-    } catch (err) {
-      setContactStatus('error');
-      setContactError(err.message || 'Something went wrong');
-    }
+    
+    // Show feature in progress message
+    setContactStatus('error');
+    setContactError('This feature is currently in progress. Please reach out to contact@runsandmiles.com for any enquiries or questions.');
   };
 
 

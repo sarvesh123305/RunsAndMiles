@@ -25,18 +25,19 @@ const Footer = () => {
                 <p className="text-xs text-gray-400 -mt-1 font-medium">Marathon Events India</p>
               </div>
             </Link>
-            <p className="text-gray-300 text-sm leading-relaxed mb-6">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
               Pune's newest running community where miles meet movement. From marathon training
               to weekend group runs, we bring runners together on and off the track.
             </p>
-            <div className="flex gap-3">
+            <div className="mb-6">
               <a
                 href="https://www.instagram.com/runs._and._miles?igsh=bDJ4YXVnb3hkdDh0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 hover:bg-gradient-to-r hover:from-primary-600 hover:to-primary-500 p-3 rounded-xl transition-all duration-300 hover:scale-110 border border-white/10"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 px-4 py-2.5 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-pink-500/50 text-sm font-semibold"
               >
                 <Instagram className="w-5 h-5" />
+                <span>Follow us on Instagram</span>
               </a>
             </div>
           </div>
@@ -105,6 +106,20 @@ const Footer = () => {
                 <div>
                   <p className="text-xs text-gray-500">Call us</p>
                   <span className="text-sm font-medium">+91 74472 88206</span>
+                </div>
+              </a>
+              <a
+                href="https://www.instagram.com/runs._and._miles?igsh=bDJ4YXVnb3hkdDh0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-gray-300 hover:text-primary-400 transition-colors group"
+              >
+                <div className="bg-gradient-to-r from-pink-500/10 to-purple-500/10 p-2 rounded-lg mr-3 group-hover:from-pink-500/20 group-hover:to-purple-500/20 transition-colors">
+                  <Instagram className="w-5 h-5 text-pink-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Follow us</p>
+                  <span className="text-sm font-medium">@runs._and._miles</span>
                 </div>
               </a>
             </div>

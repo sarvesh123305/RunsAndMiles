@@ -48,7 +48,7 @@ const EventDetails = () => {
       '3K': 40
     },
     totalSlots: 5000,
-    registeredCount: 1250,
+    registeredCount: 259,
     route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
     categoryPerks: {
       '21K': [
@@ -194,6 +194,80 @@ const EventDetails = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Details */}
           <div className="lg:col-span-2 space-y-8">
+            
+            {/* Urgency Banner */}
+            <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-4 shadow-lg animate-pulse">
+              <div className="flex items-center justify-center text-white">
+                <p className="font-bold text-lg text-center">
+                  ⚡ Slots Filling Fast! Only {event.totalSlots - event.registeredCount} spots left - Hurry Up!
+                </p>
+              </div>
+            </div>
+
+            {/* Categories & Fees - MOVED TO TOP */}
+            <div className="card p-8 bg-gradient-to-br from-primary/5 via-white to-accent/5">
+              <h2 className="font-display text-3xl font-bold text-dark mb-2 flex items-center">
+                <Award className="w-8 h-8 mr-3 text-primary" />
+                Choose Your Challenge
+              </h2>
+              <p className="text-gray-600 mb-6">Limited Time Offer - Save up to 50%!</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {event.distance.map((distance) => (
+                  <button
+                    key={distance}
+                    onClick={() => setSelectedDistance(distance)}
+                    className={`group p-6 rounded-2xl border-2 transition-all text-left relative overflow-hidden ${
+                      selectedDistance === distance
+                        ? 'border-primary bg-gradient-to-br from-primary/10 to-accent/10 shadow-xl'
+                        : 'border-gray-200 hover:border-primary/50 hover:shadow-lg bg-white'
+                    }`}
+                  >
+                    {/* Discount Badge */}
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-green-500 text-white font-bold px-3 py-1.5 rounded-full text-xs shadow-lg">
+                        {event.discount[distance]}% OFF
+                      </span>
+                    </div>
+                    
+                    <div className="mb-3">
+                      <span className="font-display text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                        {distance}
+                      </span>
+                      {selectedDistance === distance && (
+                        <span className="ml-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
+                          Selected
+                        </span>
+                      )}
+                    </div>
+                    
+                    <p className="text-base font-semibold text-gray-700 mb-4">
+                      {event.categoryNames?.[distance] || ''}
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-gray-400 line-through text-lg">₹{event.originalPrice[distance]}</span>
+                      </div>
+                      <p className="text-3xl font-bold text-primary flex items-baseline">
+                        ₹{event.registrationFee[distance]}
+                        <span className="text-sm font-normal text-gray-500 ml-2">per person</span>
+                      </p>
+                    </div>
+
+                    {/* Quick Preview of unique features */}
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium">
+                        {distance === '21K' && '✨ Premium Kit + Timing Chip + Hot Breakfast'}
+                        {distance === '10K' && '✨ Premium Kit + Timing Chip + Hot Breakfast'}
+                        {distance === '5K' && '⚡ Complete Kit + Medal + Breakfast'}
+                        {distance === '3K' && '🎉 Fun Run Kit + Medal + Refreshments'}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* About */}
             <div className="card p-8">
               <h2 className="font-display text-2xl font-bold text-dark mb-4">About This Event</h2>
@@ -211,124 +285,161 @@ const EventDetails = () => {
               </div>
             </div>
 
-            {/* Per-Category Perks */}
-            <div className="card p-8">
-              <h2 className="font-display text-2xl font-bold text-dark mb-4 flex items-center">
-                <Award className="w-6 h-6 mr-2 text-primary" />
-                What's Included in Your Race Kit
+            {/* Race Kit Details - MOVED TO BOTTOM with creative presentation */}
+            <div className="card p-8 bg-gradient-to-br from-white to-gray-50">
+              <h2 className="font-display text-3xl font-bold text-dark mb-2 flex items-center">
+                <Award className="w-8 h-8 mr-3 text-primary" />
+                Your Premium Race Kit
               </h2>
-              <p className="text-gray-600 mb-6">Every participant receives an exclusive race kit packed with premium goodies!</p>
-              {event.categoryPerks ? (
-                <div className="space-y-8">
-                  {event.distance.map((d) => {
-                    const getIcon = (iconName) => {
-                      const icons = { Shirt, Medal, Timer, Coffee, Camera, Crown, FileCheck, Droplets };
-                      return icons[iconName] || Check;
-                    };
-                    
+              <p className="text-gray-600 mb-8">Every participant receives an exclusive race kit packed with premium goodies!</p>
+              
+              {/* Common Items for All Categories */}
+              <div className="mb-8 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-6">
+                <h3 className="font-display text-lg font-bold text-dark mb-4 flex items-center">
+                  <Check className="w-5 h-5 mr-2 text-primary" />
+                  Included in All Categories
+                </h3>
+                <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
+                  {[
+                    { icon: Shirt, text: 'Event T-Shirt', color: 'blue' },
+                    { icon: Medal, text: 'Finisher Medal', color: 'yellow' },
+                    { icon: Camera, text: 'Professional Photos', color: 'purple' },
+                    { icon: FileCheck, text: 'E-Certificate', color: 'teal' },
+                    { icon: Droplets, text: 'Hydration Support', color: 'cyan' }
+                  ].map((item, index) => {
+                    const Icon = item.icon;
                     const getColorClasses = (color) => {
                       const colors = {
-                        blue: 'from-blue-500 to-blue-600 shadow-blue-500/20',
-                        yellow: 'from-yellow-500 to-amber-600 shadow-yellow-500/20',
-                        green: 'from-green-500 to-emerald-600 shadow-green-500/20',
-                        orange: 'from-orange-500 to-red-600 shadow-orange-500/20',
-                        purple: 'from-purple-500 to-pink-600 shadow-purple-500/20',
-                        red: 'from-red-500 to-rose-600 shadow-red-500/20',
-                        teal: 'from-teal-500 to-cyan-600 shadow-teal-500/20',
-                        cyan: 'from-cyan-500 to-blue-600 shadow-cyan-500/20'
+                        blue: 'from-blue-500 to-blue-600',
+                        yellow: 'from-yellow-500 to-amber-600',
+                        purple: 'from-purple-500 to-pink-600',
+                        teal: 'from-teal-500 to-cyan-600',
+                        cyan: 'from-cyan-500 to-blue-600'
                       };
-                      return colors[color] || 'from-gray-500 to-gray-600 shadow-gray-500/20';
+                      return colors[color];
                     };
-
                     return (
-                      <div key={d} className="border-2 border-gray-100 rounded-2xl p-6 hover:border-primary/30 transition-all bg-gradient-to-br from-white to-gray-50">
-                        <div className="flex items-center justify-between mb-4">
-                          <h3 className="font-display font-bold text-xl text-dark">
-                            {d} <span className="text-gray-500 font-normal text-base">{event.categoryNames?.[d] || ''}</span>
-                          </h3>
-                          <div className="text-right">
-                            <div className="flex items-center gap-2">
-                              <span className="text-gray-400 line-through text-sm">₹{event.originalPrice[d]}</span>
-                              <span className="bg-green-500 text-white font-bold px-2 py-0.5 rounded text-xs">
-                                {event.discount[d]}% OFF
-                              </span>
-                            </div>
-                            <span className="bg-gradient-to-r from-primary to-accent text-white font-bold px-4 py-1.5 rounded-full text-sm shadow-lg inline-block mt-1">
-                              ₹{event.registrationFee[d]}
-                            </span>
-                          </div>
+                      <div key={index} className="flex flex-col items-center bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                        <div className={`bg-gradient-to-br ${getColorClasses(item.color)} p-3 rounded-xl mb-3 shadow-lg`}>
+                          <Icon className="w-6 h-6 text-white" />
                         </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          {event.categoryPerks[d].map((perk, index) => {
-                            const Icon = getIcon(perk.icon);
-                            return (
-                              <div key={index} className="group flex items-center bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
-                                <div className={`bg-gradient-to-br ${getColorClasses(perk.color)} p-3 rounded-xl mr-4 shadow-lg group-hover:scale-110 transition-transform`}>
-                                  <Icon className="w-5 h-5 text-white" />
-                                </div>
-                                <span className="text-gray-800 text-sm font-semibold">{perk.text}</span>
-                              </div>
-                            );
-                          })}
-                        </div>
+                        <span className="text-gray-800 text-sm font-semibold text-center">{item.text}</span>
                       </div>
                     );
                   })}
                 </div>
-              ) : (
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {event.highlights.map((highlight, index) => (
-                    <div key={index} className="flex items-center bg-gray-50 rounded-xl p-4">
-                      <div className="bg-primary/10 p-2 rounded-lg mr-3">
-                        <Check className="w-5 h-5 text-primary" />
-                      </div>
-                      <span className="text-gray-700 font-medium">{highlight}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+              </div>
 
-            {/* Distance Categories */}
-            <div className="card p-8">
-              <h2 className="font-display text-2xl font-bold text-dark mb-4">Categories & Fees</h2>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {event.distance.map((distance) => (
-                  <button
-                    key={distance}
-                    onClick={() => setSelectedDistance(distance)}
-                    className={`p-6 rounded-xl border-2 transition-all text-left ${
-                      selectedDistance === distance
-                        ? 'border-primary bg-primary/5'
-                        : 'border-gray-200 hover:border-primary/50'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="font-display text-3xl font-bold text-dark">{distance}</span>
-                      {selectedDistance === distance && (
-                        <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                          Selected
-                        </span>
-                      )}
+              {/* Category-Specific Perks - Simplified */}
+              <div className="space-y-6">
+                <h3 className="font-display text-lg font-bold text-dark mb-4">Additional Perks by Category</h3>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* 21K & 10K - Premium Tier */}
+                  <div className="border-2 border-primary/30 rounded-2xl p-6 bg-white">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Crown className="w-6 h-6 text-yellow-500" />
+                      <h4 className="font-display text-xl font-bold text-dark">
+                        Premium Runners
+                      </h4>
                     </div>
-                    <p className="text-sm font-medium text-gray-600 mb-1">
-                      {event.categoryNames?.[distance] || ''}
-                    </p>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 line-through text-sm">₹{event.originalPrice[distance]}</span>
-                        <span className="bg-green-500 text-white font-bold px-2 py-0.5 rounded text-xs">
-                          {event.discount[distance]}% OFF
-                        </span>
-                      </div>
-                      <p className="text-2xl font-bold text-primary">
-                        ₹{event.registrationFee[distance]}
+                    <div className="flex gap-2 mb-4">
+                      <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">21K</span>
+                      <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">10K</span>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { icon: Timer, text: 'Timing Chip Enabled', color: 'green' },
+                        { icon: Coffee, text: 'Hot Breakfast', color: 'orange' },
+                        { icon: Crown, text: 'Official Event Cap', color: 'red' }
+                      ].map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className="bg-gradient-to-br from-primary/20 to-accent/20 p-2 rounded-lg">
+                              <Icon className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="text-gray-700 font-medium text-sm">{item.text}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 5K - Challenge Tier */}
+                  <div className="border-2 border-accent/30 rounded-2xl p-6 bg-white">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Award className="w-6 h-6 text-green-500" />
+                      <h4 className="font-display text-xl font-bold text-dark">
+                        Challenge Runners
+                      </h4>
+                    </div>
+                    <div className="flex gap-2 mb-4">
+                      <span className="bg-accent text-white px-3 py-1 rounded-full text-sm font-semibold">5K</span>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { icon: Coffee, text: 'Hot Breakfast', color: 'orange' },
+                        { icon: Crown, text: 'Official Event Cap', color: 'red' }
+                      ].map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className="bg-gradient-to-br from-accent/20 to-primary/20 p-2 rounded-lg">
+                              <Icon className="w-4 h-4 text-accent" />
+                            </div>
+                            <span className="text-gray-700 font-medium text-sm">{item.text}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 3K - Fun Run Tier */}
+                  <div className="border-2 border-gray-300 rounded-2xl p-6 bg-white md:col-span-2">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Heart className="w-6 h-6 text-pink-500" />
+                      <h4 className="font-display text-xl font-bold text-dark">
+                        Fun Runners
+                      </h4>
+                    </div>
+                    <div className="flex gap-2 mb-4">
+                      <span className="bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold">3K</span>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { icon: Coffee, text: 'Refreshments', color: 'orange' }
+                      ].map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className="bg-gradient-to-br from-gray-200 to-gray-300 p-2 rounded-lg">
+                              <Icon className="w-4 h-4 text-gray-700" />
+                            </div>
+                            <span className="text-gray-700 font-medium text-sm">{item.text}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value Comparison */}
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mt-6">
+                  <div className="flex items-start gap-3">
+                    <Award className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                    <div>
+                      <h4 className="font-bold text-dark mb-2">Unbeatable Value!</h4>
+                      <p className="text-sm text-gray-700">
+                        All kits worth ₹{event.originalPrice['21K']}+ now available at up to 50% off. 
+                        Premium quality guaranteed for every runner, from beginners to marathon enthusiasts!
                       </p>
                     </div>
-                  </button>
-                ))}
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
 
           {/* Right Column - Registration Card */}
@@ -357,7 +468,7 @@ const EventDetails = () => {
                     <Users className="w-4 h-4 mr-1" />
                     {event.registeredCount.toLocaleString()} registered
                   </span>
-                  <span className="text-primary font-semibold">{slotsLeft.toLocaleString()} left</span>
+                  <span className="text-red-600 font-bold">{slotsLeft.toLocaleString()} left!</span>
                 </div>
                 <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
                   <div 
@@ -365,8 +476,8 @@ const EventDetails = () => {
                     style={{ width: `${slotsPercentage}%` }}
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-2 text-center">
-                  {Math.round(slotsPercentage)}% slots filled
+                <p className="text-xs text-red-600 mt-2 text-center font-semibold">
+                  🔥 {Math.round(slotsPercentage)}% slots filled - Filling Fast!
                 </p>
               </div>
 
