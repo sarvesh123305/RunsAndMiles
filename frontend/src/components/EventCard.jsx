@@ -87,7 +87,7 @@ const EventCard = ({ event }) => {
               </span>
             </div>
             <p className="font-display font-extrabold text-3xl bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
-              ₹{event.registrationFee?.['3K'] || 299.4}
+              ₹{Math.round(event.registrationFee?.['3K'] || 299)}
             </p>
           </div>
           <Link

@@ -249,7 +249,7 @@ const EventDetails = () => {
                         <span className="text-gray-400 line-through text-lg">₹{event.originalPrice[distance]}</span>
                       </div>
                       <p className="text-3xl font-bold text-primary flex items-baseline">
-                        ₹{event.registrationFee[distance]}
+                        ₹{Math.round(event.registrationFee[distance])}
                         <span className="text-sm font-normal text-gray-500 ml-2">per person</span>
                       </p>
                     </div>
@@ -456,7 +456,7 @@ const EventDetails = () => {
                   </div>
                 )}
                 <p className="font-display text-4xl font-bold text-dark">
-                  ₹{selectedDistance ? event.registrationFee[selectedDistance] : '---'}
+                  ₹{selectedDistance ? Math.round(event.registrationFee[selectedDistance]) : '---'}
                 </p>
                 <p className="text-sm text-primary font-medium">{selectedDistance || 'Select category'}</p>
               </div>

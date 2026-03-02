@@ -1,21 +1,81 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, MapPin } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Scroll spy effect - update active section based on scroll position
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const handleScroll = () => {
+      const sections = ['events', 'about', 'contact'];
+      const scrollPosition = window.scrollY + 200; // Offset for navbar height
+
+      // Check if we're at the top of the page
+      if (window.scrollY < 300) {
+        setActiveSection('');
+        if (window.location.hash) {
+          window.history.replaceState(null, '', '/');
+        }
+        return;
+      }
+
+      // Find which section is currently visible
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            if (window.location.hash !== `#${sectionId}`) {
+              window.history.replaceState(null, '', `#${sectionId}`);
+            }
+            return;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial position
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
+
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Events', path: '/events' },
+    { name: 'Events', path: '/events', scrollId: 'events' },
     { name: 'About', path: '/#about' },
     { name: 'Contact', path: '/#contact' },
   ];
 
-  const isActive = (path) => {
-    if (path.startsWith('/#')) return false;
+  const isActive = (path, scrollId) => {
+    // For Events - check if on Events page OR on home page viewing events section
+    if (path === '/events') {
+      return location.pathname === '/events' || (location.pathname === '/' && activeSection === 'events');
+    }
+    
+    // For hash links like /#about or /#contact
+    if (path.startsWith('/#')) {
+      const hash = path.replace('/#', '');
+      // Check if we're on home page and if this section is active (from scroll or click)
+      return location.pathname === '/' && (activeSection === hash || location.hash === `#${hash}`);
+    }
+    
+    // For Home page - should be active when on home page with no active section
+    if (path === '/') {
+      return location.pathname === '/' && !activeSection && !location.hash;
+    }
+    
+    // Fallback for other paths
     return location.pathname === path;
   };
 
@@ -25,21 +85,25 @@ const Navbar = () => {
       const sectionId = link.path.replace('/#', '');
 
       if (location.pathname === '/') {
-        // Already on home page — just scroll
+        // Already on home page — update hash using window.location.hash
+        window.location.hash = sectionId;
         const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 0);
+        }
       } else {
-        // Navigate to home first, then scroll after render
-        navigate('/');
+        // Navigate to home first with hash, then scroll after render
+        navigate(`/#${sectionId}`);
         setTimeout(() => {
           const el = document.getElementById(sectionId);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 100);
       }
     } else if (link.path === '/') {
-      // Home link — scroll to top if already on home
+      // Home link — scroll to top and clear hash if already on home
       if (location.pathname === '/') {
         e.preventDefault();
+        window.location.hash = '';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
@@ -69,20 +133,23 @@ const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 onClick={(e) => handleNavClick(e, link)}
-                className={`font-bold px-5 py-2.5 rounded-full transition-all duration-300 ${
-                  isActive(link.path)
-                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg scale-105'
-                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
+                className={`font-semibold px-5 py-2.5 rounded-lg transition-all duration-300 relative ${
+                  isActive(link.path, link.scrollId)
+                    ? 'text-primary-600'
+                    : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
                 }`}
               >
                 {link.name}
+                {isActive(link.path, link.scrollId) && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-600 to-primary-500"></span>
+                )}
               </Link>
             ))}
             <a
               href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="ml-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Register Now
             </a>
@@ -110,10 +177,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`block py-3 px-5 rounded-xl font-bold transition-all ${
-                  isActive(link.path)
-                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
-                    : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
+                className={`block py-3 px-5 rounded-lg font-semibold transition-all relative ${
+                  isActive(link.path, link.scrollId)
+                    ? 'text-primary-600 bg-primary-50 border-l-4 border-primary-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-primary-600'
                 }`}
                 onClick={(e) => { handleNavClick(e, link); setIsOpen(false); }}
               >
@@ -124,7 +191,7 @@ const Navbar = () => {
               href="https://www.townscript.com/e/runs-miles-half-marathon-1st-edition-run-for-health-wellness-201310"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold px-8 py-4 rounded-full mt-4 shadow-lg"
+              className="block text-center bg-gradient-to-r from-primary-600 to-primary-500 text-white font-bold px-8 py-4 rounded-lg mt-4 shadow-lg"
               onClick={() => setIsOpen(false)}
             >
               Register Now
