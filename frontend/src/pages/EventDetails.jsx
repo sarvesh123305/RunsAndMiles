@@ -30,22 +30,10 @@ const EventDetails = () => {
       '3K': 'Fun Run'
     },
     registrationFee: {
-      '21K': 749.5,
-      '10K': 719.4,
-      '5K': 399.5,
-      '3K': 299.4
-    },
-    originalPrice: {
       '21K': 1499,
       '10K': 1199,
-      '5K': 799,
-      '3K': 499
-    },
-    discount: {
-      '21K': 50,
-      '10K': 40,
-      '5K': 50,
-      '3K': 40
+      '5K': 749,
+      '3K': 749
     },
     totalSlots: 5000,
     registeredCount: 259,
@@ -210,7 +198,7 @@ const EventDetails = () => {
                 <Award className="w-8 h-8 mr-3 text-primary" />
                 Choose Your Challenge
               </h2>
-              <p className="text-gray-600 mb-6">Limited Time Offer - Save up to 50%!</p>
+              <p className="text-gray-600 mb-6">Select your distance and register now!</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {event.distance.map((distance) => (
                   <button
@@ -222,22 +210,18 @@ const EventDetails = () => {
                         : 'border-gray-200 hover:border-primary/50 hover:shadow-lg bg-white'
                     }`}
                   >
-                    {/* Discount Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-green-500 text-white font-bold px-3 py-1.5 rounded-full text-xs shadow-lg">
-                        {event.discount[distance]}% OFF
-                      </span>
-                    </div>
+                    {selectedDistance === distance && (
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-primary text-white font-bold px-3 py-1.5 rounded-full text-xs shadow-lg">
+                          Selected
+                        </span>
+                      </div>
+                    )}
                     
                     <div className="mb-3">
                       <span className="font-display text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                         {distance}
                       </span>
-                      {selectedDistance === distance && (
-                        <span className="ml-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
-                          Selected
-                        </span>
-                      )}
                     </div>
                     
                     <p className="text-base font-semibold text-gray-700 mb-4">
@@ -245,9 +229,6 @@ const EventDetails = () => {
                     </p>
                     
                     <div className="space-y-2">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-gray-400 line-through text-lg">₹{event.originalPrice[distance]}</span>
-                      </div>
                       <p className="text-3xl font-bold text-primary flex items-baseline">
                         ₹{Math.round(event.registrationFee[distance])}
                         <span className="text-sm font-normal text-gray-500 ml-2">per person</span>
@@ -429,10 +410,9 @@ const EventDetails = () => {
                   <div className="flex items-start gap-3">
                     <Award className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                     <div>
-                      <h4 className="font-bold text-dark mb-2">Unbeatable Value!</h4>
+                      <h4 className="font-bold text-dark mb-2">Premium Race Kit Included!</h4>
                       <p className="text-sm text-gray-700">
-                        All kits worth ₹{event.originalPrice['21K']}+ now available at up to 50% off. 
-                        Premium quality guaranteed for every runner, from beginners to marathon enthusiasts!
+                        Premium quality race kit guaranteed for every runner, from beginners to marathon enthusiasts!
                       </p>
                     </div>
                   </div>
@@ -447,18 +427,10 @@ const EventDetails = () => {
             <div className="card p-6 sticky top-28">
               <div className="text-center mb-6">
                 <p className="text-sm text-gray-500 mb-1">Registration Fee</p>
-                {selectedDistance && (
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="text-gray-400 line-through text-lg">₹{event.originalPrice[selectedDistance]}</span>
-                    <span className="bg-green-500 text-white font-bold px-3 py-1 rounded-full text-sm shadow-lg">
-                      {event.discount[selectedDistance]}% OFF
-                    </span>
-                  </div>
-                )}
-                <p className="font-display text-4xl font-bold text-dark">
+                <p className="font-display text-4xl font-bold text-dark mt-2">
                   ₹{selectedDistance ? Math.round(event.registrationFee[selectedDistance]) : '---'}
                 </p>
-                <p className="text-sm text-primary font-medium">{selectedDistance || 'Select category'}</p>
+                <p className="text-sm text-primary font-medium mt-1">{selectedDistance || 'Select category'}</p>
               </div>
 
               {/* Slots Progress */}

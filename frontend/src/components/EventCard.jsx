@@ -79,15 +79,9 @@ const EventCard = ({ event }) => {
         {/* Price & CTA */}
         <div className="flex items-center justify-between pt-5 border-t-2 border-gray-100">
           <div>
-            <span className="text-xs text-gray-500 font-medium block mb-1">Starting from</span>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-gray-400 line-through text-sm font-medium">₹{event.originalPrice?.['3K'] || 499}</span>
-              <span className="bg-gradient-to-r from-accent-500 to-accent-600 text-white font-bold px-2.5 py-1 rounded-lg text-xs shadow-lg">
-                {event.discount?.['3K'] || 40}% OFF
-              </span>
-            </div>
+            <span className="text-xs text-gray-500 font-medium block mb-2">Starting from</span>
             <p className="font-display font-extrabold text-3xl bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
-              ₹{Math.round(event.registrationFee?.['3K'] || 299)}
+              ₹{Math.round(event.registrationFee?.['3K'] || 749)}
             </p>
           </div>
           <Link

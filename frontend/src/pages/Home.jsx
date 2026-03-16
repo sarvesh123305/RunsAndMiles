@@ -31,22 +31,10 @@ const Home = () => {
       '3K': 'Fun Run'
     },
     registrationFee: {
-      '21K': 749.5,
-      '10K': 719.4,
-      '5K': 399.5,
-      '3K': 299.4
-    },
-    originalPrice: {
       '21K': 1499,
       '10K': 1199,
-      '5K': 799,
-      '3K': 499
-    },
-    discount: {
-      '21K': 50,
-      '10K': 40,
-      '5K': 50,
-      '3K': 40
+      '5K': 749,
+      '3K': 749
     },
     totalSlots: 5000,
     registeredCount: 1250,
