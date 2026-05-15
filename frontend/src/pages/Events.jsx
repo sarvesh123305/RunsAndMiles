@@ -29,7 +29,7 @@ const Events = () => {
       '3K': 749
     },
     totalSlots: 5000,
-    registeredCount: 1250,
+    registeredCount: 4211,
     route: 'Starting from Wadia College Ground, the route takes you through scenic parts of Pune including Bund Garden Road and surrounding areas. The course is designed for optimal running experience with proper hydration stations and medical support throughout.',
     categoryPerks: {
       '21K': ['Premium Event T-Shirt', 'Finisher Medal', 'Timing Chip', 'Hot Breakfast', 'Free Professional Photos', 'Official Event Cap', 'E-Certificate', 'Hydration Support'],
